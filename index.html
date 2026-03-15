@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>t-online Branded Feed Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&family=Roboto+Serif:ital,wght@1,600&display=swap" rel="stylesheet">
+<style>
+/* ===== BRAND KIT TOKENS ===== */
+:root {
+  --magenta: #E20074;
+  --near-black: #171B26;
+  --dark-gray: #474C59;
+  --medium-gray: #8D93A6;
+  --off-white: #F7F9FC;
+  --light-blue-gray: #EBEFF7;
+  --info-blue: #00A0DE;
+  --yellow: #EAB305;
+  --negative: #EE3F54;
+  --positive: #0D8033;
+}
+
+/* ===== RESET ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #FFFFFF;
+  color: var(--near-black);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ===== HEADER ===== */
+.site-header {
+  background: #FFFFFF;
+  width: 100%;
+  z-index: 100;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Utility Bar */
+.utility-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 24px;
+  font-size: 12px;
+  color: var(--dark-gray);
+  border-bottom: 1px solid var(--light-blue-gray);
+  background: #FFFFFF;
+}
+.utility-left { display: flex; align-items: center; gap: 16px; }
+.utility-left span { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.utility-left span:hover { color: var(--magenta); }
+.utility-right { display: flex; align-items: center; gap: 16px; font-weight: 700; color: var(--near-black); }
+
+/* Logo Bar */
+.logo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.menu-icon { width: 24px; height: 24px; fill: var(--near-black); cursor: pointer; }
+.brand-logo { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; }
+.brand-logo span { color: var(--magenta); }
+.header-center { flex-grow: 1; max-width: 600px; margin: 0 40px; }
+.search-container {
+  display: flex;
+  border: 1px solid var(--light-blue-gray);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.search-container input {
+  flex-grow: 1;
+  border: none;
+  padding: 10px 16px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  outline: none;
+  color: var(--near-black);
+}
+.search-container input::placeholder { color: var(--medium-gray); }
+.search-container button {
+  background-color: var(--magenta);
+  color: #FFFFFF;
+  border: none;
+  padding: 0 20px;
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.search-container button:hover { opacity: 0.9; }
+.header-right .login-btn {
+  background: #FFFFFF;
+  border: 1px solid var(--light-blue-gray);
+  color: var(--magenta);
+  padding: 8px 16px;
+  font-weight: 400;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s;
+}
+.header-right .login-btn:hover { border-color: var(--magenta); }
+
+/* Nav Bar */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 24px;
+  border-bottom: 3px solid var(--magenta);
+  font-weight: 400;
+  font-size: 15px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-bar::-webkit-scrollbar { display: none; }
+.nav-bar a {
+  text-decoration: none;
+  color: var(--dark-gray);
+  white-space: nowrap;
+  padding: 10px 14px;
+  position: relative;
+  transition: color 0.15s;
+}
+.nav-bar a:hover { color: var(--near-black); }
+.nav-bar a.active {
+  color: var(--near-black);
+  font-weight: 700;
+}
+.nav-bar a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 14px;
+  right: 14px;
+  height: 3px;
+  background: var(--near-black);
+}
+.nav-bar a.home-icon { color: var(--magenta); }
+.nav-bar a.home-icon:hover { opacity: 0.8; }
+
+/* ===== PAGE CONTAINER ===== */
+.page-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Breadcrumbs */
+.breadcrumbs {
+  font-size: 11px;
+  color: var(--dark-gray);
+  margin: 16px 0;
+  letter-spacing: 0.5px;
+}
+.breadcrumbs strong { color: var(--near-black); }
+
+/* Top Ad Banner */
+.top-ad-banner {
+  width: 100%;
+  height: 200px;
+  border: 1px solid var(--light-blue-gray);
+  margin-bottom: 32px;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+.anzeige-label-vert {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  background: #FFFFFF;
+  color: var(--info-blue);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 8px 4px;
+  text-align: center;
+  border-right: 1px solid var(--light-blue-gray);
+  letter-spacing: 1px;
+}
+
+/* Article Layout */
+.article-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.article-kicker {
+  color: var(--dark-gray);
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: block;
+}
+.article-h1 {
+  font-size: 36px;
+  line-height: 1.2;
+  color: var(--near-black);
+  margin-bottom: 24px;
+}
+.article-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: var(--medium-gray);
+  font-size: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+}
+.article-meta-row strong { color: var(--near-black); }
+.article-hero {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  margin-bottom: 24px;
+  background: var(--light-blue-gray);
+}
+
+/* Schlagzeilen Widget */
+.schlagzeilen-widget {
+  background-color: var(--off-white);
+  padding: 24px;
+}
+.schlagzeilen-widget h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--light-blue-gray);
+  padding-bottom: 8px;
+}
+.schlagzeilen-widget h3::after {
+  content: ".";
+  color: var(--magenta);
+}
+.schlagzeilen-widget ul { list-style: none; padding: 0; margin: 0; }
+.schlagzeilen-widget li {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--light-blue-gray);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--near-black);
+  transition: color 0.15s;
+}
+.schlagzeilen-widget li:hover { color: var(--magenta); }
+.schlagzeilen-widget li::before {
+  content: "≡";
+  color: var(--medium-gray);
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.schlagzeilen-widget li.active { color: var(--near-black); }
+.schlagzeilen-widget li.active::before {
+  content: "▶";
+  color: var(--magenta);
+  font-size: 12px;
+  margin-top: 2px;
+}
+.schlagzeilen-widget li:last-child { border-bottom: none; }
+
+/* Article Context */
+.article-context {
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--light-blue-gray);
+  margin-bottom: 40px;
+}
+.article-context p {
+  font-size: 18px;
+  color: var(--dark-gray);
+  font-weight: bold;
+  line-height: 1.7;
+}
+
+/* ===== FEED SYSTEM ===== */
+.feed-wrapper {
+  max-width: 1000px;
+  margin: 0 auto 100px auto;
+}
+
+/* Section Header */
+.section-header {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 40px 0 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--light-blue-gray);
+  padding-bottom: 12px;
+}
+.section-header-title::after {
+  content: ".";
+  color: var(--magenta);
+}
+.section-action {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--magenta);
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.15s;
+}
+.section-action:hover { opacity: 0.8; }
+.section-action::after {
+  content: "→";
+  font-size: 16px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* Cards */
+.card {
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s;
+}
+.card:hover { transform: translateY(-2px); }
+.card:hover .card-headline { color: var(--magenta); }
+.card-image-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 12px;
+  background: var(--off-white);
+  overflow: hidden;
+  position: relative;
+}
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.card:hover .card-image-container img { transform: scale(1.03); }
+.card-label {
+  color: var(--dark-gray);
+  font-size: 13px;
+  margin-bottom: 6px;
+  font-weight: 400;
+}
+.card-label.opinion {
+  color: var(--magenta);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+}
+.card-headline {
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--near-black);
+  margin-bottom: 12px;
+  transition: color 0.15s;
+}
+.card-headline.opinion {
+  font-family: 'Roboto Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+}
+.card-meta {
+  color: var(--medium-gray);
+  font-size: 12px;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ad-badge {
+  color: var(--medium-gray);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+/* Column spans */
+.col-span-2 { grid-column: span 2; }
+.col-span-3 { grid-column: span 3; }
+.col-span-6 { grid-column: span 6; }
+
+/* Card sizes */
+.card-large .card-headline { font-size: 24px; }
+
+/* Sponsor branding */
+.sponsor-otto {
+  color: #E50010;
+  font-weight: 900;
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.sponsor-stihl {
+  display: inline-block;
+  background: var(--near-black);
+  color: #F37021;
+  font-weight: 900;
+  padding: 2px 6px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.sponsor-tchibo {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: var(--near-black);
+}
+
+/* Horizontal Cards */
+.card-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  border: 1px solid var(--light-blue-gray);
+  background: #FFFFFF;
+  padding: 16px;
+  transition: border-color 0.15s;
+}
+.card-horizontal:hover { border-color: var(--magenta); }
+.card-horizontal:hover .card-headline { color: var(--magenta); }
+.card-horizontal .card-image-container {
+  width: 240px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* Banner Cards */
+.banner-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--light-blue-gray);
+  background: #FFFFFF;
+  overflow: hidden;
+}
+.banner-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 24px;
+  background: #FFFFFF;
+  border-top: 1px solid var(--light-blue-gray);
+}
+.banner-card-main {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+}
+.banner-btn {
+  background: #3174E0;
+  color: #FFFFFF;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.banner-btn:hover { opacity: 0.9; }
+.banner-btn.grey { background: #666; }
+
+/* Taboola Logo */
+.taboola-logo {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--medium-gray);
+  display: flex;
+  align-items: center;
+}
+.taboola-logo span { color: #3174E0; }
+
+/* Card Logo Container */
+.card-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+/* Network overlay */
+.network-logo-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+/* ===== NATIVE AD TRANSITION ===== */
+.feed-transition {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+.feed-transition__line {
+  flex: 1;
+  height: 1px;
+  background: var(--light-blue-gray);
+}
+.feed-transition__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--medium-gray);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ===== VIDEO BADGE ===== */
+.video-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background: var(--magenta);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-badge svg { fill: #FFFFFF; width: 14px; height: 14px; }
+
+/* ===== LIVETICKER ===== */
+.liveticker-badge {
+  display: inline-block;
+  background: var(--magenta);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.8px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* ===== BREAKING NEWS BAR ===== */
+.breaking-bar {
+  background: var(--yellow);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.breaking-bar__dot {
+  width: 8px;
+  height: 8px;
+  background: var(--magenta);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.breaking-bar__badge {
+  background: var(--magenta);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+}
+.breaking-bar__text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--near-black);
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: var(--near-black);
+  color: #FFFFFF;
+  padding: 40px 0 24px;
+}
+.site-footer .page-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.footer-logo {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.footer-logo span { color: var(--magenta); }
+.footer-sections {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.footer-section h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #FFFFFF;
+}
+.footer-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.footer-link {
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  transition: all 0.15s;
+}
+.footer-link:hover { border-color: var(--magenta); color: #FFFFFF; }
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.footer-social__label {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-right: 8px;
+}
+.footer-social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.footer-social-icon:hover { background: var(--magenta); }
+.footer-social-icon svg { fill: #FFFFFF; width: 18px; height: 18px; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+.footer-telekom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-telekom-t {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--magenta);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .article-layout { grid-template-columns: 1fr; }
+  .nav-bar { padding-bottom: 0; }
+  .utility-bar { display: none; }
+  .col-span-2, .col-span-3 { grid-column: span 3; }
+  .header-center { display: none; }
+  .card-horizontal { flex-direction: column; }
+  .card-horizontal .card-image-container { width: 100%; }
+  .banner-card-main { flex-direction: column; gap: 0; }
+  .banner-card-main .card-image-container { width: 100%; }
+  .footer-sections { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .col-span-2, .col-span-3 { grid-column: span 6; }
+  .header-right { display: none; }
+  .footer-sections { grid-template-columns: 1fr; }
+  .article-h1 { font-size: 28px; }
+  .section-header { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <!-- Utility Bar -->
+  <div class="utility-bar">
+    <div class="utility-left">
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        Wetter
+      </span>
+      <span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+        DAX <strong style="color: var(--negative);">19.642 (−0,38%)</strong>
+      </span>
+      <span>Gold <strong style="color: var(--positive);">3.241 (+0,38%)</strong></span>
+      <span>Bitcoin <strong style="color: var(--negative);">83.294 (−1,12%)</strong></span>
+      <span>Jobsuche</span>
+      <span>Lotto</span>
+      <span>Telekom Services ▾</span>
+    </div>
+    <div class="utility-right">
+      <span>amazon.de</span>
+      <span style="color:#E50010; font-style:italic;">OTTO</span>
+      <span>Scalable Capital</span>
+    </div>
+  </div>
+
+  <!-- Logo Bar -->
+  <div class="logo-bar">
+    <div class="header-left">
+      <svg class="menu-icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      <div class="brand-logo">t-online<span>.</span></div>
+    </div>
+    <div class="header-center">
+      <div class="search-container">
+        <input type="text" placeholder="Suchbegriff eingeben...">
+        <button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          Suchen
+        </button>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="login-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--magenta)"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        E-Mail Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Nav Bar -->
+  <nav class="nav-bar">
+    <a href="#" class="home-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--magenta)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </a>
+    <a href="#">Regional</a>
+    <a href="#">Politik</a>
+    <a href="#">Ukraine</a>
+    <a href="#" class="active">Sport</a>
+    <a href="#">Wirtschaft &amp; Finanzen</a>
+    <a href="#">Unterhaltung</a>
+    <a href="#">Panorama</a>
+    <a href="#">Gesundheit</a>
+    <a href="#">Leben</a>
+    <a href="#">Spiele</a>
+    <a href="#">Klima</a>
+    <a href="#">Mobilität</a>
+  </nav>
+</header>
+
+<!-- ===== BREAKING NEWS ===== -->
+<div class="breaking-bar">
+  <span class="breaking-bar__dot"></span>
+  <span class="breaking-bar__badge">Eilmeldung</span>
+  <span class="breaking-bar__text">
+    <a href="#">Iran-Konflikt: Bundesregierung ruft Krisenstab ein – Auswärtiges Amt warnt vor Reisen in die Region</a>
+  </span>
+</div>
+
+<!-- ===== PAGE CONTENT ===== -->
+<div class="page-container">
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    Home &rsaquo; Sport &rsaquo; Olympia &rsaquo; <strong>Paralympics: Anna-Lena Forster gewinnt zweite deutsche Goldmedaille</strong>
+  </div>
+
+  <!-- Top Ad Banner -->
+  <div class="top-ad-banner">
+    <div class="anzeige-label-vert">ANZEIGE</div>
+    <div style="flex-grow: 1; display:flex; align-items:center; justify-content:center; background:#FFFFFF;">
+      <div style="display:flex; justify-content:space-between; width:100%; height:100%; padding: 0 40px; align-items:center;">
+        <div style="display:flex; align-items:center; gap: 20px;">
+          <div style="width:100px; height:100px; border-radius:50%; background: var(--light-blue-gray);"></div>
+          <span style="color: #999; font-size: 28px; font-weight: 400;">Galaxy Buds4 Pro</span>
+        </div>
+        <div style="text-align:center;">
+          <h2 style="font-size:32px; margin-bottom:12px; font-weight: 900; color: var(--near-black);">Sound on für<br>dein Leben</h2>
+          <button style="background:#E50010; color:white; padding:10px 28px; font-weight:bold; font-size:16px; border:none; border-radius:30px; cursor:pointer;">Jetzt bei OTTO</button>
+        </div>
+        <h1 style="font-weight:900; font-size:38px; letter-spacing:1px; color: var(--near-black);">SAMSUNG</h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Layout -->
+  <div class="article-layout">
+    <main class="main-content">
+      <span class="article-kicker">Anna-Lena Forster überragt erneut</span>
+      <h1 class="article-h1">Zweite Goldmedaille für Deutschland bei den Paralympics</h1>
+      <div class="article-meta-row">
+        <span>Von <strong>t-online, sid</strong></span>
+        <span style="text-align: right;">12.03.2026 – 14:39 Uhr<br>Lesedauer: 2 Min.</span>
+      </div>
+      <img class="article-hero" src="https://picsum.photos/seed/paralympics2/800/450" alt="Paralympics – Anna-Lena Forster feiert Gold">
+
+      <div class="article-context">
+        <p>...Dies ist das Ende des redaktionellen Artikels. Die native Feed-Experience beginnt direkt hierunter, nahtlos integriert ins Corporate Design von t-online.</p>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="schlagzeilen-widget">
+        <h3>Schlagzeilen</h3>
+        <ul>
+          <li>Minister nach Autounfall schwer verletzt</li>
+          <li>Partner gibt Update zu Elton Johns Zustand</li>
+          <li>Viagra hilft bei unheilbarer Krankheit</li>
+          <li>Spaziergängerin macht traurigen Fund</li>
+          <li>Salmonellen: Rückruf bei Discounter</li>
+          <li>Preisrallye beim Heizöl</li>
+          <li>Rekordspieltag in der Champions League</li>
+          <li class="active">Familiendrama durch Bügeleisen</li>
+          <li>Neuer Vertrag? Kovač über DFB-Star</li>
+          <li>375 Euro: Autofahrer beklagt Abzocke</li>
+          <li>Kritik an DHL-Paketzustellung</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ===== NATIVE FEED START ===== -->
+  <div class="feed-wrapper">
+
+    <!-- Transition -->
+    <div class="feed-transition">
+      <div class="feed-transition__line"></div>
+      <span class="feed-transition__label">Weitere Inhalte</span>
+      <div class="feed-transition__line"></div>
+    </div>
+
+    <!-- SECTION 1: Mehr aus der Redaktion -->
+    <div class="section-header">
+      <span class="section-header-title">Mehr aus der Redaktion</span>
+      <span class="taboola-logo">Taboola<span>Feed</span></span>
+    </div>
+
+    <div class="grid">
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/redaktion1/600/338" alt="Wahl Baden-Württemberg">
+        </div>
+        <div class="card-label">Wahl in Baden-Württemberg</div>
+        <div class="card-headline">Umfrage zeigt: So kommt das Hagel-Video bei den Wählern an</div>
+        <div class="card-meta">vor 45 Min.</div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/redaktion2/600/338" alt="Gerichtsverhandlung">
+        </div>
+        <div class="card-label">"Wollen wir hier nicht haben"</div>
+        <div class="card-headline">Richter greift ein: Marius Borg Høiby fängt Streit vor Gericht an</div>
+        <div class="card-meta">vor 1 Std.</div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/redaktion3/600/338" alt="Kölner Zoo">
+        </div>
+        <div class="card-label">Bedrohte Tierart</div>
+        <div class="card-headline">Seltene Mongozmakis leben jetzt im Kölner Zoo</div>
+        <div class="card-meta">vor 2 Std.</div>
+      </a>
+
+      <!-- Native Ad Cards -->
+      <a href="#" class="card card-large col-span-3">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/ad1/800/450" alt="Sicherheitskamera">
+        </div>
+        <div class="card-headline">Diese Kamera schlägt jedes Jahr Tausende von Einbrechern in die Flucht</div>
+        <div class="card-meta">Innovative Smart-Kamera | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card card-large col-span-3">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/ad2/800/450" alt="Mini-Heizgerät">
+        </div>
+        <div class="card-headline">Dieses Mini-Gerät heizt jeden Raum und verbraucht fast keinen Strom</div>
+        <div class="card-meta">Techno News | <span class="ad-badge">Anzeige</span></div>
+      </a>
+    </div>
+
+    <!-- SECTION 2: Advertorial Grid -->
+    <div class="grid" style="border-top: 1px solid var(--light-blue-gray); padding-top: 40px;">
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/grid1/600/338" alt="Ergonomisches Sitzkissen">
+        </div>
+        <div class="card-headline">Unglaublich: Senioren sitzen stundenlang bequem dank...</div>
+        <div class="card-meta">Ergonomisches Sitzkissen | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/grid2/600/338" alt="Schönheitstipp">
+        </div>
+        <div class="card-headline">Eine 70-jährige Dame spricht über diesen äußerst...</div>
+        <div class="card-meta">Zeitschrift Schönheit | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/grid3/600/338" alt="Schlaf-Tipp">
+        </div>
+        <div class="card-headline">I Kept Flipping My Pillow... Then I Switched</div>
+        <div class="card-meta">Sleep Support Journal | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/grid4/600/338" alt="Neuropathie">
+        </div>
+        <div class="card-headline">Neuropathie kommt nicht von Vitamin-B-Mangel. Lernen Sie...</div>
+        <div class="card-meta">EMSense | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/grid5/600/338" alt="Haarwuchs">
+        </div>
+        <div class="card-headline">Das verborgene Hormon, das heimlich deine Haarfollikel...</div>
+        <div class="card-meta">HaloGrow | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/grid6/600/338" alt="Hautpflege">
+        </div>
+        <div class="card-headline">Meine Haut sah müde und geschwollen aus... bis ich dies...</div>
+        <div class="card-meta">Skin Care | <span class="ad-badge">Anzeige</span></div>
+      </a>
+    </div>
+
+    <!-- SECTION 3: Shopping -->
+    <div class="section-header">
+      <span class="section-header-title">Shopping</span>
+      <a href="#" class="section-action">Alle Angebote</a>
+    </div>
+
+    <div class="grid">
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/shop1/600/338" alt="Betten-Deal">
+        </div>
+        <div class="sponsor-otto">OTTO</div>
+        <div class="card-headline" style="font-size: 18px;">Der Weltschlaftag-Deal: Mind. 20% Extra-Rabatt auf viele Betten!</div>
+        <div class="card-meta" style="color: var(--info-blue);">nur bis 16.03. auf otto.de <span style="color: var(--medium-gray); margin-left:4px;">| <span class="ad-badge">Anzeige</span></span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/shop2/600/338" alt="Rasenmäher">
+        </div>
+        <div><span class="sponsor-stihl">STIHL</span></div>
+        <div class="card-headline" style="font-size: 18px;">Perfekter Schnitt: Bis zu 100 € Cash-back auf Akku-Rasenmäher</div>
+        <div class="card-meta" style="color: var(--info-blue);">Cashback für Deinen Garten <span style="color: var(--medium-gray); margin-left:4px;">| <span class="ad-badge">Anzeige</span></span></div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/shop3/600/338" alt="Kindermode">
+        </div>
+        <div class="sponsor-tchibo">Tchibo</div>
+        <div class="card-headline" style="font-size: 18px;">Wilde Hasen, bunte Blumen: Fröhliche Mode für Kleinkinder &amp; Babys</div>
+        <div class="card-meta" style="color: var(--info-blue);">diese Woche neu bei tchibo.de <span style="color: var(--medium-gray); margin-left:4px;">| <span class="ad-badge">Anzeige</span></span></div>
+      </a>
+
+      <a href="#" class="card card-large col-span-3">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/shop4/800/450" alt="Reinigungsgerät">
+        </div>
+        <div class="card-headline">Ich schämte mich, als Gäste kamen... bis ich dies fand</div>
+        <div class="card-meta">Synoshi Pro | <span class="ad-badge">Anzeige</span></div>
+      </a>
+      <a href="#" class="card card-large col-span-3">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/shop5/800/450" alt="Kniebandage">
+        </div>
+        <div class="card-headline">Diese "Methode gegen Knieprobleme" hilft wirklich</div>
+        <div class="card-meta">Life Tech Adviser | <span class="ad-badge">Anzeige</span></div>
+      </a>
+    </div>
+
+    <!-- SECTION 4: Banner Ads -->
+    <div class="grid">
+      <div class="banner-card-wrapper col-span-6" style="margin-bottom: 24px;">
+        <div class="banner-card-main">
+          <div class="card-image-container" style="width: 45%; margin-bottom: 0;">
+            <img src="https://picsum.photos/seed/banner1/600/338" alt="Villa in Meran">
+          </div>
+          <div style="padding: 30px; flex-grow: 1;">
+            <h2 class="card-headline" style="font-size: 32px; margin-bottom: 0;">Villa mit Skypool in Meran</h2>
+          </div>
+        </div>
+        <div class="banner-card-footer">
+          <div class="card-logo-container">
+            <div style="width: 40px; height: 40px; background: #6B4E23; color: white; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; border-radius: 4px;">LIGNIUS</div>
+            <span style="font-size: 18px; color: var(--dark-gray);">Lignius RealEstate</span>
+          </div>
+          <button class="banner-btn">Kontakt</button>
+        </div>
+      </div>
+
+      <div class="banner-card-wrapper col-span-6">
+        <div class="banner-card-main">
+          <div class="card-image-container" style="width: 45%; margin-bottom: 0;">
+            <img src="https://picsum.photos/seed/banner2/600/338" alt="Siebmaschine">
+          </div>
+          <div style="padding: 30px; flex-grow: 1;">
+            <h2 class="card-headline" style="font-size: 32px; margin-bottom: 0;">Mutterboden Siebmaschinen</h2>
+          </div>
+        </div>
+        <div class="banner-card-footer">
+          <div class="card-logo-container">
+            <div style="width: 40px; height: 40px; background: #8BC34A; color: white; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:bold; font-style: italic; border-radius: 4px;">G</div>
+            <span style="font-size: 18px; color: var(--dark-gray);">CZ SCREEN s.r.o.</span>
+          </div>
+          <button class="banner-btn grey">Öffnen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Empfehlungen der Redaktion -->
+    <div class="section-header">
+      <span class="section-header-title">Empfehlungen der Redaktion</span>
+    </div>
+
+    <div class="grid">
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/empf1/600/338" alt="USA vs Iran">
+        </div>
+        <div class="card-label">USA versus Iran</div>
+        <div class="card-headline">"Das wäre ganz schlecht für Trump"</div>
+        <div class="card-meta">vor 3 Std.</div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/empf2/600/338" alt="Orbán Streit">
+        </div>
+        <div class="card-label">Streit eskaliert</div>
+        <div class="card-headline">Bei Orbán verlieren sie die Nerven</div>
+        <div class="card-meta">vor 4 Std.</div>
+      </a>
+      <a href="#" class="card col-span-2">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/empf3/600/338" alt="Spritpreisbremse">
+        </div>
+        <div class="card-label opinion">Meinung</div>
+        <div class="card-headline opinion">Katherina Reiche hat recht – die Spritpreisbremse ist überfällig</div>
+        <div class="card-meta">vor 5 Std.</div>
+      </a>
+    </div>
+
+    <!-- SECTION 6: Mehr aus dem Netzwerk -->
+    <div class="section-header">
+      <span class="section-header-title">Mehr aus dem Netzwerk</span>
+    </div>
+
+    <div class="grid" style="gap: 16px;">
+      <a href="#" class="card-horizontal col-span-6">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/net1/400/225" alt="Fritzbox-Warnung">
+          <div class="network-logo-overlay" style="background: rgba(0,0,0,0.6); border-radius: 4px; width: 28px; height: 28px; font-size: 14px;">G</div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="card-label" style="color: var(--positive); font-weight: 700;">GIGA</div>
+          <div class="card-headline" style="margin-bottom: 0;">Bundesamt warnt vor Fritzbox: Das müsst ihr jetzt überprüfen</div>
+        </div>
+      </a>
+      <a href="#" class="card-horizontal col-span-6">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/net2/400/225" alt="Kesha vs Trump">
+          <div class="network-logo-overlay" style="background: #FFFFFF; color: var(--near-black); border-radius: 4px; width: 28px; height: 28px; font-size: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">W</div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="card-label" style="color: var(--info-blue); font-weight: 700;">watson.de</div>
+          <div class="card-headline" style="margin-bottom: 0;">"Ekelhaft und unmenschlich": Kesha wütet gegen Donald Trump und das Weiße Haus feiert es</div>
+        </div>
+      </a>
+      <a href="#" class="card-horizontal col-span-6">
+        <div class="card-image-container">
+          <img src="https://picsum.photos/seed/net3/400/225" alt="E-Auto-Vergleich">
+          <div class="network-logo-overlay" style="background: var(--magenta); border-radius: 4px; width: 28px; height: 28px; font-size: 11px; font-weight: 900;">t</div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <div class="card-label" style="color: var(--magenta); font-weight: 700;">t-online Ratgeber</div>
+          <div class="card-headline" style="margin-bottom: 0;">E-Auto-Vergleich 2026: Diese Modelle lohnen sich wirklich</div>
+        </div>
+      </a>
+    </div>
+
+  </div><!-- /feed-wrapper -->
+</div><!-- /page-container -->
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="page-container">
+    <div class="footer-logo">t-online<span>.</span></div>
+
+    <div class="footer-sections">
+      <div class="footer-section">
+        <h4>Das Unternehmen</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Über uns</a>
+          <a href="#" class="footer-link">Karriere</a>
+          <a href="#" class="footer-link">Presse</a>
+          <a href="#" class="footer-link">Kontakt</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Produkte &amp; Services</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link">E-Mail</a>
+          <a href="#" class="footer-link">Shopping</a>
+          <a href="#" class="footer-link">Browser</a>
+          <a href="#" class="footer-link">Spiele</a>
+          <a href="#" class="footer-link">Wetter</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Netzwerk &amp; Partner</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Werbung</a>
+          <a href="#" class="footer-link">Ströer</a>
+          <a href="#" class="footer-link">Mediadaten</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Über t-online</h4>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Impressum</a>
+          <a href="#" class="footer-link">Datenschutz</a>
+          <a href="#" class="footer-link">AGB</a>
+          <a href="#" class="footer-link">Cookie-Einstellungen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-social">
+      <span class="footer-social__label">Bleiben Sie dran!</span>
+      <a href="#" class="footer-social-icon" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </a>
+      <a href="#" class="footer-social-icon" aria-label="X">
+        <svg viewBox="0 0 24 24"><path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-7-8.5L20 4h-2l-5 6.2L9 4H4z"/></svg>
+      </a>
+      <a href="#" class="footer-social-icon" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="#FFF" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#FFF" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+      </a>
+      <a href="#" class="footer-social-icon" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+      </a>
+      <a href="#" class="footer-social-icon" aria-label="Spotify">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#FFF" stroke-width="2"/><path d="M8 15c3-1 6-1 9 .5M7.5 12.5c4-1.5 8-1.5 11 .5M7 10c4.5-1.5 9.5-1.5 13 1" fill="none" stroke="#FFF" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-telekom">
+        <span class="footer-telekom-t">T</span>
+        <span>Erleben, was verbindet. Ein Angebot der Ströer Digital Publishing GmbH. Lizenziert von Deutsche Telekom.</span>
+      </div>
+      <span>&copy; 2026 t-online</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
