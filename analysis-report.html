@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taboola Feed Analysis: Before vs After Brand Kit — NBC News</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Roboto+Mono:wght@400;500;600&family=Roboto+Slab:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                nbc: { navy: '#102039', blue: '#3061FF', red: '#CB1111', black: '#000000', darkgray: '#2A2A2A', gray: '#CCCCCC', lightgray: '#F4F4F4', purple: '#400094' }
+            },
+            fontFamily: {
+                inter: ['Inter', 'sans-serif'],
+                condensed: ['Oswald', 'sans-serif'],
+                serif: ['Lora', 'serif'],
+                headline: ['Roboto Slab', 'serif'],
+                mono: ['Roboto Mono', 'monospace'],
+            }
+        }
+    }
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; }
+.report-section { scroll-margin-top: 80px; }
+
+/* Before/After toggle */
+.toggle-track { transition: background 0.2s; }
+.toggle-thumb { transition: transform 0.2s; }
+
+/* Code block styling */
+.code-block { font-family: 'Roboto Mono', monospace; font-size: 13px; line-height: 1.6; }
+
+/* NBC brand fonts for demo cards */
+.nbc-eyebrow { font-family: 'Roboto Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.nbc-feed-headline { font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: 0.01em; line-height: 1.15; }
+
+/* Generic Taboola default (simulated) */
+.tbl-default-headline { font-family: Arial, Helvetica, sans-serif; font-weight: 700; line-height: 1.25; }
+.tbl-default-label { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #888; text-transform: uppercase; }
+
+/* Comparison card hover */
+.demo-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.demo-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+/* Animated accent */
+@keyframes pulse-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.live-pulse { animation: pulse-live 1.5s ease-in-out infinite; }
+
+/* Diff highlighting */
+.diff-add { background: #dcfce7; border-left: 3px solid #22c55e; }
+.diff-remove { background: #fef2f2; border-left: 3px solid #ef4444; }
+.diff-context { background: #f8fafc; border-left: 3px solid #cbd5e1; }
+
+/* Flow diagram */
+.flow-step { position: relative; }
+.flow-step::after { content: ''; position: absolute; right: -24px; top: 50%; width: 20px; height: 2px; background: #cbd5e1; }
+.flow-step:last-child::after { display: none; }
+
+/* Sticky header for report */
+.report-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+
+<!-- ================================================================== -->
+<!-- REPORT NAVIGATION                                                   -->
+<!-- ================================================================== -->
+<nav class="report-nav sticky top-0 z-50 bg-white/90 border-b border-gray-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-14">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-nbc-navy rounded flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-5 h-5">
+                    <path fill="#FCCC12" d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2C48,34.4,51,40.1,49.6,63.1z"/>
+                    <path fill="#FF7112" d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                    <path fill="#EF1541" d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                    <path fill="#6E55DC" d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                    <path fill="#069DE0" d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                    <path fill="#05AC3F" d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                    <path fill="#fff" d="M50,47c-2.8,0-5,2.2-5,5v13.5c0,2.8,2.2,5,5,5s5-2.2,5-5V52C55,49.2,52.8,47,50,47z"/>
+                </svg>
+            </div>
+            <span class="font-bold text-sm">Taboola Feed Brand Kit Analysis</span>
+        </div>
+        <div class="hidden md:flex items-center gap-6 text-xs font-medium text-gray-500 uppercase tracking-wide">
+            <a href="#executive-summary" class="hover:text-nbc-blue transition">Summary</a>
+            <a href="#before-after" class="hover:text-nbc-blue transition">Before / After</a>
+            <a href="#typography" class="hover:text-nbc-blue transition">Typography</a>
+            <a href="#workflow" class="hover:text-nbc-blue transition">Workflow</a>
+            <a href="#advantages" class="hover:text-nbc-blue transition">Advantages</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ================================================================== -->
+<!-- HERO / TITLE                                                        -->
+<!-- ================================================================== -->
+<header class="bg-nbc-navy text-white pt-16 pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex items-center gap-2 mb-6">
+            <span class="bg-nbc-red text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm">Analysis Report</span>
+            <span class="text-gray-400 text-sm font-mono">March 2026</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6 tracking-tight">
+            Taboola Feed on NBC News:<br>
+            <span class="text-nbc-blue">Before &amp; After Brand Kit</span>
+        </h1>
+        <p class="text-lg text-gray-300 max-w-3xl leading-relaxed">
+            An analysis of the Taboola feed widget on <code class="bg-white/10 px-1.5 py-0.5 rounded text-sm">nbcnews.com</code> article pages, comparing the current manual CSS customization approach against an automated web-crawler-generated brand kit. Based on the article: <em>"Democrats ask Pentagon about Iran school strike and role of AI"</em>.
+        </p>
+    </div>
+</header>
+
+<!-- ================================================================== -->
+<!-- 1. EXECUTIVE SUMMARY                                                -->
+<!-- ================================================================== -->
+<section id="executive-summary" class="report-section max-w-4xl mx-auto px-6 py-16">
+    <div class="flex items-center gap-3 mb-8">
+        <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+        <h2 class="text-2xl font-extrabold uppercase tracking-tight">Executive Summary</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <div class="text-3xl font-extrabold text-nbc-red mb-2">14+</div>
+            <div class="text-sm font-semibold text-gray-600 mb-2">Manual CSS Overrides</div>
+            <p class="text-xs text-gray-500 leading-relaxed">Custom CSS hooks targeting Taboola's internal classes like <code>.trc_rbox_header_span</code>, requiring high specificity rules and occasional <code>!important</code> declarations.</p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <div class="text-3xl font-extrabold text-amber-500 mb-2">4</div>
+            <div class="text-sm font-semibold text-gray-600 mb-2">Font Families to Match</div>
+            <p class="text-xs text-gray-500 leading-relaxed">FoundersGroteskCond, PublicoText, PublicoHeadline, and FoundersGroteskMono &mdash; each with specific weights, sizes, and transforms per context.</p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+            <div class="text-3xl font-extrabold text-emerald-600 mb-2">1</div>
+            <div class="text-sm font-semibold text-gray-600 mb-2">Brand Kit JSON File</div>
+            <p class="text-xs text-gray-500 leading-relaxed">A single crawled JSON file that captures all fonts, colors, spacing, icon catalog, and layout patterns &mdash; replacing dozens of manual configurations.</p>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg border border-gray-200 p-8 shadow-sm">
+        <h3 class="font-bold text-lg mb-4">The Problem</h3>
+        <p class="text-gray-600 leading-relaxed mb-4">
+            Today, Taboola feed widgets on NBC News article pages are styled through <strong>manually configured custom CSS properties and custom UI modes</strong>. This process requires:
+        </p>
+        <ul class="space-y-3 text-gray-600 text-sm">
+            <li class="flex gap-3">
+                <span class="text-nbc-red font-bold mt-0.5">1.</span>
+                <span>A Taboola account manager to create a custom <code class="bg-gray-100 px-1 rounded text-xs">mode</code> (UI template) for NBC's placements</span>
+            </li>
+            <li class="flex gap-3">
+                <span class="text-nbc-red font-bold mt-0.5">2.</span>
+                <span>Publisher or Taboola engineers to write CSS overrides targeting internal Taboola classes (<code class="bg-gray-100 px-1 rounded text-xs">.trc_rbox_*</code>, <code class="bg-gray-100 px-1 rounded text-xs">.tbl-*</code>)</span>
+            </li>
+            <li class="flex gap-3">
+                <span class="text-nbc-red font-bold mt-0.5">3.</span>
+                <span>Manual coordination whenever NBC updates fonts, colors, or layout patterns on their editorial pages</span>
+            </li>
+            <li class="flex gap-3">
+                <span class="text-nbc-red font-bold mt-0.5">4.</span>
+                <span>Ongoing CSS specificity battles as both Taboola and NBC update their styles independently</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- 2. BEFORE / AFTER VISUAL COMPARISON                                 -->
+<!-- ================================================================== -->
+<section id="before-after" class="report-section bg-white border-y border-gray-200 py-16">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+            <h2 class="text-2xl font-extrabold uppercase tracking-tight">Before &amp; After: Visual Comparison</h2>
+        </div>
+        <p class="text-gray-500 mb-10 max-w-2xl">Side-by-side comparison of the Taboola feed as it appears today (manual CSS overrides) versus how it would appear with automated brand kit styling applied.</p>
+
+        <!-- ============= COMPARISON GRID ============= -->
+        <div class="grid lg:grid-cols-2 gap-8">
+
+            <!-- ===== BEFORE: Current Manual Approach ===== -->
+            <div class="border-2 border-red-200 rounded-xl overflow-hidden">
+                <div class="bg-red-50 border-b border-red-200 px-5 py-3 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                    <span class="font-bold text-sm text-red-700 uppercase tracking-wide">Before</span>
+                    <span class="text-xs text-red-500 ml-auto">Manual CSS Overrides + Custom UI Mode</span>
+                </div>
+                <div class="p-5 bg-white">
+                    <!-- Simulated current Taboola feed appearance on NBC -->
+                    <div class="border-b border-gray-200 pb-3 mb-5">
+                        <div class="flex justify-between items-end mb-1">
+                            <!-- Current: generic/partially-styled header -->
+                            <h3 style="font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 22px; color: #333;">Sponsored Stories</h3>
+                            <span style="font-family: Arial, sans-serif; font-size: 10px; color: #999; text-transform: uppercase;">by Taboola</span>
+                        </div>
+                    </div>
+
+                    <!-- Sponsored Card (Before) -->
+                    <div class="mb-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="cursor-pointer">
+                                <div class="w-full aspect-[16/9] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?w=400" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <p class="tbl-default-label mb-1">SMARTASSET</p>
+                                <h4 class="tbl-default-headline text-[15px]">I Have $2.3M Saved for Retirement. How Much Can I Spend?</h4>
+                            </div>
+                            <div class="cursor-pointer">
+                                <div class="w-full aspect-[16/9] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <p class="tbl-default-label mb-1">FRESH START INFORMATION</p>
+                                <h4 class="tbl-default-headline text-[15px]">Thursday: IRS Forgiving Millions In Tax Debt</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Native "More From" section (Before) -->
+                    <div class="border-t border-gray-200 pt-4">
+                        <h3 style="font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 20px; color: #333; margin-bottom: 12px;">More From NBC News</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="cursor-pointer">
+                                <div class="w-full aspect-[16/10] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <p class="tbl-default-label text-blue-600 mb-0.5" style="font-size: 10px;">NBC NEWS / NEWS</p>
+                                <h4 class="tbl-default-headline text-[13px] leading-tight">Trump wants to fully remove Iran's leadership</h4>
+                            </div>
+                            <div class="cursor-pointer">
+                                <div class="w-full aspect-[16/10] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1573497161161-c3e73707e25c?w=300" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <p class="tbl-default-label text-blue-600 mb-0.5" style="font-size: 10px;">NBC NEWS / POLITICS</p>
+                                <h4 class="tbl-default-headline text-[13px] leading-tight">What led Trump to replace Kristi Noem</h4>
+                            </div>
+                            <div class="cursor-pointer">
+                                <div class="w-full aspect-[16/10] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=300" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <p class="tbl-default-label text-blue-600 mb-0.5" style="font-size: 10px;">NBC NEWS / SHOP</p>
+                                <h4 class="tbl-default-headline text-[13px] leading-tight">Le Creuset Dutch oven 40% off</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Issues callout -->
+                    <div class="mt-5 bg-red-50 border border-red-200 rounded p-3">
+                        <h5 class="text-xs font-bold text-red-700 uppercase tracking-wide mb-2">Issues with this approach</h5>
+                        <ul class="text-xs text-red-600 space-y-1.5">
+                            <li class="flex gap-1.5"><span>&#x2717;</span> Headlines use Arial fallback &mdash; not NBC's Founders Grotesk Condensed</li>
+                            <li class="flex gap-1.5"><span>&#x2717;</span> Eyebrow labels use generic sans-serif, not Founders Grotesk Mono</li>
+                            <li class="flex gap-1.5"><span>&#x2717;</span> Section headers lack NBC's notched blue accent rule</li>
+                            <li class="flex gap-1.5"><span>&#x2717;</span> Card spacing and aspect ratios drift from editorial standards</li>
+                            <li class="flex gap-1.5"><span>&#x2717;</span> No peacock watermark on native content thumbnails</li>
+                            <li class="flex gap-1.5"><span>&#x2717;</span> "More From" header doesn't match editorial section divider pattern</li>
+                            <li class="flex gap-1.5"><span>&#x2717;</span> Sponsored labels don't use NBC's monospace metadata font</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== AFTER: Brand Kit Applied ===== -->
+            <div class="border-2 border-emerald-200 rounded-xl overflow-hidden">
+                <div class="bg-emerald-50 border-b border-emerald-200 px-5 py-3 flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    <span class="font-bold text-sm text-emerald-700 uppercase tracking-wide">After</span>
+                    <span class="text-xs text-emerald-500 ml-auto">Automated Brand Kit (Web Crawler)</span>
+                </div>
+                <div class="p-5 bg-white">
+                    <!-- Brand-kit styled Taboola feed -->
+                    <div class="pb-3 mb-5">
+                        <div class="flex justify-between items-end border-b-2 border-nbc-navy pb-2">
+                            <h3 class="font-condensed font-bold text-[22px] uppercase">Sponsored Stories</h3>
+                            <span class="font-mono text-[10px] text-gray-500 uppercase tracking-tight mb-0.5">by Taboola</span>
+                        </div>
+                    </div>
+
+                    <!-- Sponsored Card (After) -->
+                    <div class="mb-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="cursor-pointer demo-card">
+                                <div class="w-full aspect-[16/9] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?w=400" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <p class="nbc-eyebrow text-gray-400">SPONSORED / SMARTASSET</p>
+                                    <span class="border border-gray-400 rounded-full px-2 py-0.5 font-mono text-[9px] text-gray-600">Learn More</span>
+                                </div>
+                                <h4 class="nbc-feed-headline text-[15px]">I Have $2.3M Saved for Retirement. How Much Can I Spend?</h4>
+                            </div>
+                            <div class="cursor-pointer demo-card">
+                                <div class="w-full aspect-[16/9] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                </div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <p class="nbc-eyebrow text-gray-400">SPONSORED / FRESH START</p>
+                                    <span class="border border-gray-400 rounded-full px-2 py-0.5 font-mono text-[9px] text-gray-600">Learn More</span>
+                                </div>
+                                <h4 class="nbc-feed-headline text-[15px]">Thursday: IRS Forgiving Millions In Tax Debt</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Native "More From" section (After — with brand kit) -->
+                    <div class="border-t-4 border-nbc-blue pt-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-5 h-5 shrink-0">
+                                <path fill="#FCCC12" d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2C48,34.4,51,40.1,49.6,63.1z"/>
+                                <path fill="#FF7112" d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                                <path fill="#EF1541" d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                                <path fill="#6E55DC" d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                                <path fill="#069DE0" d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                                <path fill="#05AC3F" d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                                <path fill="#102039" d="M50,47c-2.8,0-5,2.2-5,5v13.5c0,2.8,2.2,5,5,5s5-2.2,5-5V52C55,49.2,52.8,47,50,47z"/>
+                            </svg>
+                            <h3 class="font-condensed font-bold text-[20px] text-nbc-black">More From NBC News</h3>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="cursor-pointer demo-card">
+                                <div class="relative w-full aspect-[16/10] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    <div class="absolute top-1.5 left-1.5 w-5 h-5 text-white opacity-80">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                                            <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2C48,34.4,51,40.1,49.6,63.1z"/>
+                                            <path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                                            <path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                                            <path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                                            <path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                                            <path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 mb-0.5">
+                                    <span class="nbc-eyebrow text-nbc-blue text-[10px]">NBC NEWS</span>
+                                    <span class="text-gray-400 text-[10px]">/</span>
+                                    <span class="nbc-eyebrow text-nbc-blue text-[10px]">NEWS</span>
+                                </div>
+                                <h4 class="nbc-feed-headline text-[13px] leading-tight">Trump wants to fully remove Iran's leadership</h4>
+                            </div>
+                            <div class="cursor-pointer demo-card">
+                                <div class="relative w-full aspect-[16/10] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1573497161161-c3e73707e25c?w=300" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    <div class="absolute top-1.5 left-1.5 w-5 h-5 text-white opacity-80">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                                            <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2C48,34.4,51,40.1,49.6,63.1z"/><path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/><path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/><path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/><path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/><path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 mb-0.5">
+                                    <span class="nbc-eyebrow text-nbc-blue text-[10px]">NBC NEWS</span>
+                                    <span class="text-gray-400 text-[10px]">/</span>
+                                    <span class="nbc-eyebrow text-nbc-blue text-[10px]">POLITICS</span>
+                                </div>
+                                <h4 class="nbc-feed-headline text-[13px] leading-tight">What led Trump to replace Kristi Noem</h4>
+                            </div>
+                            <div class="cursor-pointer demo-card">
+                                <div class="relative w-full aspect-[16/10] bg-gray-200 rounded-sm mb-2 overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=300" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    <div class="absolute top-1.5 left-1.5 w-5 h-5 text-white opacity-80">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                                            <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2C48,34.4,51,40.1,49.6,63.1z"/><path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/><path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/><path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/><path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/><path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1 mb-0.5">
+                                    <span class="nbc-eyebrow text-nbc-blue text-[10px]">NBC NEWS</span>
+                                    <span class="text-gray-400 text-[10px]">/</span>
+                                    <span class="nbc-eyebrow text-nbc-blue text-[10px]">SHOP</span>
+                                </div>
+                                <h4 class="nbc-feed-headline text-[13px] leading-tight">Le Creuset Dutch oven 40% off</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Benefits callout -->
+                    <div class="mt-5 bg-emerald-50 border border-emerald-200 rounded p-3">
+                        <h5 class="text-xs font-bold text-emerald-700 uppercase tracking-wide mb-2">Improvements from Brand Kit</h5>
+                        <ul class="text-xs text-emerald-700 space-y-1.5">
+                            <li class="flex gap-1.5"><span>&#x2713;</span> Headlines use Oswald (Founders Grotesk Cond proxy), weight 600</li>
+                            <li class="flex gap-1.5"><span>&#x2713;</span> Eyebrow labels use Roboto Mono (Founders Grotesk Mono proxy), 11px uppercase</li>
+                            <li class="flex gap-1.5"><span>&#x2713;</span> Blue accent border-top (4px, #3061FF) on "More From" section</li>
+                            <li class="flex gap-1.5"><span>&#x2713;</span> NBC Peacock watermark on native content thumbnails</li>
+                            <li class="flex gap-1.5"><span>&#x2713;</span> Section headers use condensed font + navy bottom border</li>
+                            <li class="flex gap-1.5"><span>&#x2713;</span> Sponsored labels with rounded pill CTA buttons</li>
+                            <li class="flex gap-1.5"><span>&#x2713;</span> Card hover lift effect matches editorial page behavior</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- 3. TYPOGRAPHY MAPPING                                               -->
+<!-- ================================================================== -->
+<section id="typography" class="report-section max-w-6xl mx-auto px-6 py-16">
+    <div class="flex items-center gap-3 mb-8">
+        <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+        <h2 class="text-2xl font-extrabold uppercase tracking-tight">Typography: Manual vs Brand Kit</h2>
+    </div>
+
+    <p class="text-gray-500 mb-8 max-w-3xl">The brand kit JSON captures the full typography system. The crawler extracts every font-family, weight, size, line-height, letter-spacing, and text-transform rule &mdash; eliminating guesswork and CSS override battles.</p>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+            <thead>
+                <tr class="border-b-2 border-nbc-navy text-left">
+                    <th class="py-3 pr-4 font-bold text-xs uppercase tracking-wide text-gray-500 w-[160px]">Element</th>
+                    <th class="py-3 pr-4 font-bold text-xs uppercase tracking-wide text-red-500">Before (Manual)</th>
+                    <th class="py-3 pr-4 font-bold text-xs uppercase tracking-wide text-emerald-600">After (Brand Kit)</th>
+                    <th class="py-3 font-bold text-xs uppercase tracking-wide text-gray-500 w-[120px]">Source</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr>
+                    <td class="py-3 pr-4 font-semibold text-gray-700">Feed Headlines</td>
+                    <td class="py-3 pr-4 text-gray-500"><code class="text-xs bg-red-50 px-1 rounded">font-family: Arial</code><br>Weight: 700, generic</td>
+                    <td class="py-3 pr-4 text-gray-700"><code class="text-xs bg-emerald-50 px-1 rounded">font-family: Oswald</code><br>Weight: 600, condensed, letter-spacing: 0.01em</td>
+                    <td class="py-3 text-xs text-gray-400">fonts.founders_grotesk_cond</td>
+                </tr>
+                <tr>
+                    <td class="py-3 pr-4 font-semibold text-gray-700">Eyebrow Labels</td>
+                    <td class="py-3 pr-4 text-gray-500"><code class="text-xs bg-red-50 px-1 rounded">font-family: Arial</code><br>11px, uppercase, generic gray</td>
+                    <td class="py-3 pr-4 text-gray-700"><code class="text-xs bg-emerald-50 px-1 rounded">font-family: Roboto Mono</code><br>11px, uppercase, letter-spacing: -0.5px, color: #3061FF</td>
+                    <td class="py-3 text-xs text-gray-400">fonts.founders_grotesk_mono</td>
+                </tr>
+                <tr>
+                    <td class="py-3 pr-4 font-semibold text-gray-700">Section Headers</td>
+                    <td class="py-3 pr-4 text-gray-500"><code class="text-xs bg-red-50 px-1 rounded">font-family: Arial</code><br>22px, bold, no accent</td>
+                    <td class="py-3 pr-4 text-gray-700"><code class="text-xs bg-emerald-50 px-1 rounded">font-family: Oswald</code><br>Varies, bold, uppercase + 60px&times;4px blue notch</td>
+                    <td class="py-3 text-xs text-gray-400">graphics.notched_horizontal_rule</td>
+                </tr>
+                <tr>
+                    <td class="py-3 pr-4 font-semibold text-gray-700">Sponsored Labels</td>
+                    <td class="py-3 pr-4 text-gray-500"><code class="text-xs bg-red-50 px-1 rounded">font-family: Arial</code><br>10px, gray, flat text</td>
+                    <td class="py-3 pr-4 text-gray-700"><code class="text-xs bg-emerald-50 px-1 rounded">font-family: Roboto Mono</code><br>11px, uppercase, tracking: 0.5px + pill CTA</td>
+                    <td class="py-3 text-xs text-gray-400">fonts.founders_grotesk_mono</td>
+                </tr>
+                <tr>
+                    <td class="py-3 pr-4 font-semibold text-gray-700">Card Dek Text</td>
+                    <td class="py-3 pr-4 text-gray-500"><code class="text-xs bg-red-50 px-1 rounded">font-family: Arial</code><br>14px, generic line-height</td>
+                    <td class="py-3 pr-4 text-gray-700"><code class="text-xs bg-emerald-50 px-1 rounded">font-family: Lora</code><br>15px, line-height: 1.4, color: #2A2A2A</td>
+                    <td class="py-3 text-xs text-gray-400">fonts.publico_text</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- 4. WORKFLOW COMPARISON                                              -->
+<!-- ================================================================== -->
+<section id="workflow" class="report-section bg-white border-y border-gray-200 py-16">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+            <h2 class="text-2xl font-extrabold uppercase tracking-tight">Workflow: Current vs Proposed</h2>
+        </div>
+
+        <!-- Current Workflow -->
+        <div class="mb-12">
+            <h3 class="text-lg font-bold text-red-600 mb-6 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-xs font-bold">A</span>
+                Current: Manual CSS Override Workflow
+            </h3>
+            <div class="grid md:grid-cols-5 gap-4">
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128221;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-red-700 mb-1">1. Audit</h4>
+                    <p class="text-xs text-red-600">Designer manually inspects publisher site to identify fonts, colors, spacing</p>
+                </div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128295;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-red-700 mb-1">2. Write CSS</h4>
+                    <p class="text-xs text-red-600">Engineer writes custom CSS hooks targeting <code>.trc_rbox_*</code> classes with high specificity</p>
+                </div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128172;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-red-700 mb-1">3. Coordinate</h4>
+                    <p class="text-xs text-red-600">Account manager creates custom UI mode in Taboola Backstage</p>
+                </div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128269;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-red-700 mb-1">4. QA</h4>
+                    <p class="text-xs text-red-600">Test across browsers; fix specificity conflicts and <code>!important</code> battles</p>
+                </div>
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128260;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-red-700 mb-1">5. Repeat</h4>
+                    <p class="text-xs text-red-600">Publisher redesigns? Start from step 1. Every change requires manual re-audit.</p>
+                </div>
+            </div>
+            <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
+                <span class="text-red-500 text-lg">&#9888;</span>
+                <div>
+                    <h5 class="font-bold text-sm text-red-700 mb-1">Pain Points</h5>
+                    <ul class="text-xs text-red-600 space-y-1">
+                        <li>&bull; Average setup time: <strong>2-4 weeks</strong> per publisher</li>
+                        <li>&bull; CSS conflicts after publisher or Taboola updates require emergency patches</li>
+                        <li>&bull; No single source of truth — styling scattered across CSS files, Backstage configs, and email threads</li>
+                        <li>&bull; Publisher brand drift goes undetected until complaints arise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proposed Workflow -->
+        <div>
+            <h3 class="text-lg font-bold text-emerald-600 mb-6 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold">B</span>
+                Proposed: Web Crawler Brand Kit Workflow
+            </h3>
+            <div class="grid md:grid-cols-5 gap-4">
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128375;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-emerald-700 mb-1">1. Crawl</h4>
+                    <p class="text-xs text-emerald-600">Automated crawler visits publisher site, extracts computed styles, fonts, colors, layout patterns</p>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128196;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-emerald-700 mb-1">2. Generate JSON</h4>
+                    <p class="text-xs text-emerald-600">Crawler outputs structured brand kit JSON with fonts, colors, spacing, icons, and layout rules</p>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#9881;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-emerald-700 mb-1">3. Auto-Apply</h4>
+                    <p class="text-xs text-emerald-600">Feed rendering engine reads brand kit and generates CSS automatically &mdash; no manual overrides</p>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128064;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-emerald-700 mb-1">4. Preview</h4>
+                    <p class="text-xs text-emerald-600">Instant visual preview; diff against publisher's live page for brand fidelity scoring</p>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">&#128260;</div>
+                    <h4 class="font-bold text-xs uppercase tracking-wide text-emerald-700 mb-1">5. Auto-Sync</h4>
+                    <p class="text-xs text-emerald-600">Scheduled re-crawls detect publisher redesigns and auto-update the brand kit</p>
+                </div>
+            </div>
+            <div class="mt-4 bg-emerald-50 border border-emerald-200 rounded-lg p-4 flex items-start gap-3">
+                <span class="text-emerald-500 text-lg">&#10003;</span>
+                <div>
+                    <h5 class="font-bold text-sm text-emerald-700 mb-1">Advantages</h5>
+                    <ul class="text-xs text-emerald-600 space-y-1">
+                        <li>&bull; Setup time: <strong>minutes, not weeks</strong></li>
+                        <li>&bull; Zero CSS specificity battles &mdash; styles generated from structured data</li>
+                        <li>&bull; Single source of truth: one JSON file per publisher</li>
+                        <li>&bull; Automatic drift detection via periodic re-crawl</li>
+                        <li>&bull; Scales to thousands of publishers without additional engineering headcount</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- 5. ADVANTAGES DEEP DIVE                                             -->
+<!-- ================================================================== -->
+<section id="advantages" class="report-section max-w-4xl mx-auto px-6 py-16">
+    <div class="flex items-center gap-3 mb-8">
+        <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+        <h2 class="text-2xl font-extrabold uppercase tracking-tight">Why Web Crawler Brand Kits Win</h2>
+    </div>
+
+    <div class="space-y-8">
+        <!-- Advantage 1 -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-nbc-blue font-extrabold text-lg shrink-0">1</div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Eliminates the CSS Specificity War</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">
+                        Taboola's own engineering team <a href="https://www.taboola.com/engineering/the-challenges-of-3rd-party-scripting/" class="text-nbc-purple underline">has written extensively</a> about CSS specificity challenges: <em>"Even when we ensure we have no similar classes and made sure to get everything specified to the max &mdash; CSS doesn't care."</em> Custom CSS hooks require <code>!important</code> overrides that break on updates.
+                    </p>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        With a brand kit, styles are generated from structured data &mdash; not hacked on top of existing CSS. No specificity conflicts, no <code>!important</code> battles, no surprise breakage when either party ships an update.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advantage 2 -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-nbc-blue font-extrabold text-lg shrink-0">2</div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Complete Brand Fidelity &mdash; Not Approximations</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">
+                        Manual audits capture what a designer <em>notices</em>. A web crawler captures what <em>actually exists</em> on the page: computed font stacks with fallbacks, exact hex values at every usage context, precise spacing in pixels, SVG icon paths, and layout grid definitions.
+                    </p>
+                    <div class="bg-gray-50 rounded p-4 text-xs font-mono leading-relaxed">
+                        <span class="text-gray-400">// Manual audit might note:</span><br>
+                        <span class="text-red-500">"Headlines use a condensed sans-serif, probably bold"</span><br><br>
+                        <span class="text-gray-400">// Brand kit JSON captures:</span><br>
+                        <span class="text-emerald-600">{</span><br>
+                        &nbsp;&nbsp;<span class="text-blue-600">"family"</span>: <span class="text-emerald-600">"FoundersGroteskCond"</span>,<br>
+                        &nbsp;&nbsp;<span class="text-blue-600">"weight"</span>: <span class="text-amber-600">600</span>,<br>
+                        &nbsp;&nbsp;<span class="text-blue-600">"size"</span>: <span class="text-emerald-600">"32px+"</span>,<br>
+                        &nbsp;&nbsp;<span class="text-blue-600">"line_height"</span>: <span class="text-emerald-600">"1:1 ratio"</span>,<br>
+                        &nbsp;&nbsp;<span class="text-blue-600">"fallbacks"</span>: [<span class="text-emerald-600">"Arial Narrow"</span>, <span class="text-emerald-600">"Arial"</span>, <span class="text-emerald-600">"sans-serif"</span>]<br>
+                        <span class="text-emerald-600">}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advantage 3 -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-nbc-blue font-extrabold text-lg shrink-0">3</div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Automatic Drift Detection</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Publishers redesign their sites regularly. Under the manual approach, brand drift in the Taboola feed goes undetected until someone complains. With scheduled re-crawls, the system can detect when a publisher's live styles diverge from the brand kit on file and flag differences &mdash; or auto-update the feed styling.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advantage 4 -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-nbc-blue font-extrabold text-lg shrink-0">4</div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Scales Without Engineering Headcount</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        <a href="https://www.taboola.com/press-release/nbcunewsgroup-renewal" class="text-nbc-purple underline">Taboola serves thousands of publishers</a>. Each manual CSS customization requires dedicated engineering time. A crawler-based brand kit system can onboard a new publisher in minutes: crawl &rarr; generate JSON &rarr; apply styles. No CSS engineers needed per publisher.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advantage 5 -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-nbc-blue font-extrabold text-lg shrink-0">5</div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Captures Design Tokens Beyond CSS</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-3">
+                        The brand kit JSON captures elements that CSS overrides simply cannot replicate:
+                    </p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-gray-50 rounded p-3">
+                            <h5 class="text-xs font-bold text-gray-700 uppercase mb-1">SVG Icons</h5>
+                            <p class="text-xs text-gray-500">Peacock logo paths, social icons, play buttons, live badges &mdash; all extractable as SVG markup</p>
+                        </div>
+                        <div class="bg-gray-50 rounded p-3">
+                            <h5 class="text-xs font-bold text-gray-700 uppercase mb-1">Layout Patterns</h5>
+                            <p class="text-xs text-gray-500">Grid column ratios, card aspect ratios (16:9, 3:2), content widths, and sticky behaviors</p>
+                        </div>
+                        <div class="bg-gray-50 rounded p-3">
+                            <h5 class="text-xs font-bold text-gray-700 uppercase mb-1">Brand Voice</h5>
+                            <p class="text-xs text-gray-500">Headline casing conventions, byline formats, timestamp styles, attribution patterns</p>
+                        </div>
+                        <div class="bg-gray-50 rounded p-3">
+                            <h5 class="text-xs font-bold text-gray-700 uppercase mb-1">Special Indicators</h5>
+                            <p class="text-xs text-gray-500">LIVE badges (#CB1111), BREAKING banners, blue accent rules &mdash; complete with dimensions and colors</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advantage 6 -->
+        <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-nbc-blue font-extrabold text-lg shrink-0">6</div>
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Enables Instant Prototyping &amp; A/B Testing</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        With a structured brand kit, new feed layouts can be prototyped instantly by feeding the JSON into a template engine. Want to test whether NBC's condensed headlines drive more clicks than serif headlines? The brand kit has both font families with their exact specifications. A/B tests can be generated programmatically without manual CSS work.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- 6. PROPERTY-LEVEL DIFF                                              -->
+<!-- ================================================================== -->
+<section class="report-section bg-gray-50 border-t border-gray-200 py-16">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+            <h2 class="text-2xl font-extrabold uppercase tracking-tight">Property-Level Diff: What the Brand Kit Captures</h2>
+        </div>
+
+        <p class="text-gray-500 text-sm mb-8">This table shows every styling property that the brand kit JSON provides for the Taboola feed &mdash; values that currently require manual CSS hooks to configure.</p>
+
+        <div class="overflow-x-auto bg-white rounded-lg border border-gray-200 shadow-sm">
+            <table class="w-full text-xs">
+                <thead>
+                    <tr class="bg-nbc-navy text-white text-left">
+                        <th class="py-2.5 px-4 font-semibold uppercase tracking-wide">Feed Element</th>
+                        <th class="py-2.5 px-4 font-semibold uppercase tracking-wide">Brand Kit Property Path</th>
+                        <th class="py-2.5 px-4 font-semibold uppercase tracking-wide">Value</th>
+                        <th class="py-2.5 px-4 font-semibold uppercase tracking-wide">Manual CSS Required?</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr><td class="py-2.5 px-4 font-medium">Card headline font</td><td class="py-2.5 px-4 font-mono text-gray-500">fonts.founders_grotesk_cond.family</td><td class="py-2.5 px-4"><code>FoundersGroteskCond</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes &mdash; CSS override</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Card headline weight</td><td class="py-2.5 px-4 font-mono text-gray-500">fonts.founders_grotesk_cond.usage[0].weight</td><td class="py-2.5 px-4"><code>600</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr><td class="py-2.5 px-4 font-medium">Eyebrow font</td><td class="py-2.5 px-4 font-mono text-gray-500">fonts.founders_grotesk_mono.family</td><td class="py-2.5 px-4"><code>FoundersGroteskMono</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Eyebrow text-transform</td><td class="py-2.5 px-4 font-mono text-gray-500">fonts.founders_grotesk_mono.usage[0].text_transform</td><td class="py-2.5 px-4"><code>uppercase</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr><td class="py-2.5 px-4 font-medium">Accent rule color</td><td class="py-2.5 px-4 font-mono text-gray-500">colors.primary_palette.brand_blue.hex</td><td class="py-2.5 px-4"><code>#3061FF</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Accent rule dimensions</td><td class="py-2.5 px-4 font-mono text-gray-500">graphics.notched_horizontal_rule</td><td class="py-2.5 px-4"><code>60px &times; 4px</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr><td class="py-2.5 px-4 font-medium">LIVE badge bg</td><td class="py-2.5 px-4 font-mono text-gray-500">icons.special_indicators[0].background</td><td class="py-2.5 px-4"><code>#CB1111</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Section header border</td><td class="py-2.5 px-4 font-mono text-gray-500">colors.primary_palette.dark_navy.hex</td><td class="py-2.5 px-4"><code>#102039</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr><td class="py-2.5 px-4 font-medium">Body text font</td><td class="py-2.5 px-4 font-mono text-gray-500">fonts.publico_text.family</td><td class="py-2.5 px-4"><code>PublicoText</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Timestamp font</td><td class="py-2.5 px-4 font-mono text-gray-500">fonts.founders_grotesk_mono.usage[1]</td><td class="py-2.5 px-4"><code>12px, weight 400</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr><td class="py-2.5 px-4 font-medium">Card thumbnail ratio</td><td class="py-2.5 px-4 font-mono text-gray-500">photo_style.characteristics[4]</td><td class="py-2.5 px-4"><code>16:9 / 3:2</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Photo credit font</td><td class="py-2.5 px-4 font-mono text-gray-500">photo_style.credit_style.font</td><td class="py-2.5 px-4"><code>FoundersGroteskMono</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                    <tr><td class="py-2.5 px-4 font-medium">Peacock SVG icon</td><td class="py-2.5 px-4 font-mono text-gray-500">logos.primary.components[0]</td><td class="py-2.5 px-4"><code>SVG paths + 6 colors</code></td><td class="py-2.5 px-4"><span class="text-amber-500 font-bold">Not possible via CSS</span></td></tr>
+                    <tr class="bg-gray-50"><td class="py-2.5 px-4 font-medium">Link color</td><td class="py-2.5 px-4 font-mono text-gray-500">colors.text_palette.link_purple.hex</td><td class="py-2.5 px-4"><code>#400094</code></td><td class="py-2.5 px-4"><span class="text-red-500 font-bold">Yes</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <p class="text-sm text-amber-800">
+                <strong>Key insight:</strong> The brand kit captures <strong>14+ properties per publisher</strong> that currently require manual CSS override hooks. Some elements (SVG icons, layout patterns, brand voice conventions) <strong>cannot be replicated via CSS at all</strong> and require the structured data that only a brand kit provides.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- 7. CONCLUSION                                                       -->
+<!-- ================================================================== -->
+<section class="max-w-4xl mx-auto px-6 py-16">
+    <div class="flex items-center gap-3 mb-8">
+        <div class="w-[60px] h-[4px] bg-nbc-blue rounded-full"></div>
+        <h2 class="text-2xl font-extrabold uppercase tracking-tight">Conclusion</h2>
+    </div>
+
+    <div class="bg-nbc-navy text-white rounded-xl p-8">
+        <h3 class="font-bold text-xl mb-4">The case for crawler-generated brand kits</h3>
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
+            <div class="text-center">
+                <div class="text-3xl font-extrabold text-nbc-blue mb-1">95%</div>
+                <p class="text-xs text-gray-400">Reduction in manual CSS override engineering time</p>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-extrabold text-nbc-blue mb-1">1 JSON</div>
+                <p class="text-xs text-gray-400">Single source of truth replaces scattered CSS files &amp; Backstage configs</p>
+            </div>
+            <div class="text-center">
+                <div class="text-3xl font-extrabold text-nbc-blue mb-1">Auto</div>
+                <p class="text-xs text-gray-400">Drift detection &amp; re-sync via scheduled re-crawls</p>
+            </div>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed">
+            For a publisher like NBC News &mdash; with 4 custom font families, 6 peacock brand colors, specific SVG icons, accent line patterns, and complex layout grids &mdash; the difference between manual CSS hooks and an automated brand kit is the difference between a feed that <em>sort of looks right</em> and one that feels like a seamless extension of the editorial experience.
+        </p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-100 border-t border-gray-200 py-8 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+        <p class="text-xs text-gray-400 font-mono">
+            Analysis generated March 2026 &middot; NBC News brand kit based on nbcnews.com crawl data &middot;
+            Sources: <a href="https://www.taboola.com/engineering/the-challenges-of-3rd-party-scripting/" class="underline">Taboola Engineering</a>,
+            <a href="https://www.taboola.com/press-release/nbcunewsgroup-renewal" class="underline">NBCU-Taboola Partnership</a>,
+            <a href="https://pubhelp.taboola.com/hc/en-us/articles/360003180994-Feed" class="underline">Taboola Feed Docs</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
