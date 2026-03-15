@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Democrats ask Pentagon about Iran school strike - NBC News</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--
+      Oswald -> Founders Grotesk Cond (Nav, UI, Labels)
+      Roboto Slab -> Heavy Serif for Headlines
+      Lora -> Publico Text for Body & Deck
+      Roboto Mono -> Founders Grotesk Mono for Eyebrows/Timestamps
+    -->
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Oswald:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&family=Roboto+Slab:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nbc: {
+                            navy: '#102039',
+                            blue: '#3061FF',
+                            red: '#CB1111',
+                            black: '#000000',
+                            darkgray: '#2A2A2A',
+                            gray: '#CCCCCC',
+                            lightgray: '#F4F4F4',
+                            purple: '#400094'
+                        }
+                    },
+                    fontFamily: {
+                        condensed: ['Oswald', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                        headline: ['Roboto Slab', 'serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+</script>
+<style>
+/* Typography System Overrides */
+.nav-link { font-family: 'Oswald', sans-serif; font-size: 14.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
+.article-headline { font-family: 'Roboto Slab', serif; font-size: 44px; line-height: 1.1; font-weight: 700; color: #FFFFFF; }
+.article-deck { font-family: 'Lora', serif; font-size: 21px; line-height: 1.5; font-weight: 400; color: #D1D5DB; }
+.article-body p { font-family: 'Lora', serif; font-size: 19px; line-height: 1.6; color: #2A2A2A; margin-bottom: 24px; }
+.article-body a { color: #400094; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.feed-headline { font-family: 'Oswald', sans-serif; font-weight: 600; letter-spacing: 0.01em; line-height: 1.15; }
+.eyebrow { font-family: 'Roboto Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #9CA3AF; }
+.caption-text { font-family: 'Lora', serif; font-size: 14px; color: #4B5563; }
+
+@media (max-width: 768px) {
+    .article-headline { font-size: 32px; }
+    .article-deck { font-size: 18px; }
+}
+
+/* Hide scrollbar for nav */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Pulsing live dot animation */
+@keyframes pulse-live {
+    0%, 100% { opacity: 1; box-shadow: 0 0 4px rgba(203,17,17,0.8); }
+    50% { opacity: 0.5; box-shadow: 0 0 8px rgba(203,17,17,0.4); }
+}
+.live-pulse { animation: pulse-live 1.5s ease-in-out infinite; }
+
+/* Smooth hover transitions for feed cards */
+.feed-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.feed-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+/* Blue accent line for captions (brand kit spec) */
+.caption-accent::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #3061FF;
+    margin-bottom: 12px;
+}
+
+/* Recommended card lift */
+.rec-card { transition: background 0.15s ease; }
+.rec-card:hover { background: #eef0f4; }
+
+/* Trending pill style */
+.trending-pill {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    white-space: nowrap;
+    color: rgba(255,255,255,0.75);
+    transition: color 0.15s;
+}
+.trending-pill:hover { color: #FFFFFF; }
+</style>
+</head>
+<body class="bg-white text-nbc-black font-serif antialiased">
+
+<!-- Sticky Main Navigation -->
+<header class="bg-nbc-navy text-white sticky top-0 z-50 border-b border-[#CB1111] h-[64px] flex items-center">
+    <div class="max-w-[1440px] w-full mx-auto flex items-center justify-between px-4">
+        <!-- Left: Logo & Links -->
+        <div class="flex items-center overflow-x-auto no-scrollbar">
+            <a href="#" class="flex items-center mr-8 shrink-0">
+                <!-- High Fidelity NBC Peacock SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-[38px] h-[38px] mr-2">
+                    <path fill="#FCCC12" d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                    <path fill="#FF7112" d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                    <path fill="#EF1541" d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                    <path fill="#6E55DC" d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                    <path fill="#069DE0" d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                    <path fill="#05AC3F" d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                    <!-- White Cutout Body -->
+                    <path fill="#ffffff" d="M50,47c-2.8,0-5,2.2-5,5v13.5c0,2.8,2.2,5,5,5s5-2.2,5-5V52C55,49.2,52.8,47,50,47z"/>
+                </svg>
+                <span class="font-condensed font-bold text-[28px] tracking-tight mt-[3px]">NBC NEWS</span>
+            </a>
+
+            <!-- Exact Links from Screenshot -->
+            <nav class="hidden lg:flex items-center space-x-5 mt-1">
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">IRAN WAR</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">POLITICS</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">U.S. NEWS</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">WORLD</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">SPORTS</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">LOCAL</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">SHOPPING</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">TIPLINE</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">BUSINESS</a>
+                <a href="#" class="nav-link text-white hover:text-gray-300 transition">HEALTH</a>
+            </nav>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="flex items-center space-x-6 shrink-0">
+            <!-- Search -->
+            <button class="hidden md:block hover:text-gray-300 transition mt-1" aria-label="Search">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+            </button>
+            <a href="#" class="hidden md:flex items-center nav-link hover:text-gray-300 transition mt-1">
+                <span class="w-2 h-2 rounded-full bg-nbc-red mr-1.5 live-pulse"></span> WATCH
+            </a>
+            <button class="hover:text-gray-300 transition mt-1" aria-label="Menu">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6h18M3 12h18M3 18h18"></path></svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Trending Bar (brand kit: secondary dark navy bar with topic pills) -->
+<div class="bg-[#0d1a2e] border-t border-[rgba(255,255,255,0.06)]">
+    <div class="max-w-[1440px] mx-auto flex items-center px-4 h-[36px] gap-4 overflow-x-auto no-scrollbar">
+        <span class="font-mono text-[11px] text-gray-500 uppercase tracking-wide shrink-0">Trending</span>
+        <div class="w-px h-4 bg-gray-700 shrink-0"></div>
+        <a href="#" class="trending-pill flex items-center gap-1.5 text-white">
+            <span class="w-[6px] h-[6px] rounded-full bg-nbc-red live-pulse inline-block"></span> Iran War Live Updates
+        </a>
+        <a href="#" class="trending-pill">Federal Reserve</a>
+        <a href="#" class="trending-pill">Kristi Noem</a>
+        <a href="#" class="trending-pill">Pentagon AI</a>
+        <a href="#" class="trending-pill">Oil Prices</a>
+        <a href="#" class="trending-pill">2026 Midterms</a>
+        <a href="#" class="trending-pill">Cyberattack</a>
+    </div>
+</div>
+
+<!-- Dark Header Section (Hero) -->
+<div class="bg-nbc-navy text-white px-4 w-full">
+    <div class="max-w-[1000px] mx-auto flex flex-col items-start pt-0 pb-8">
+        <!-- First on NBC News Badge -->
+        <div class="bg-[#CB1111] text-white font-condensed font-bold text-[13px] uppercase tracking-wide px-3 py-[4px] mb-5">
+            FIRST ON NBC NEWS
+        </div>
+        <!-- Eyebrow -->
+        <div class="eyebrow mb-3">NATIONAL SECURITY</div>
+        <!-- Serif Headline -->
+        <h1 class="article-headline mb-4 max-w-[900px]">Democrats ask Pentagon about Iran school strike and role of AI</h1>
+        <!-- Deck -->
+        <p class="article-deck max-w-[850px]">In a letter to Defense Secretary Pete Hegseth, more than 120 Democratic lawmakers ask whether the Pentagon will investigate the strike as a possible war crime.</p>
+    </div>
+</div>
+
+<!-- Main Content Wrapper -->
+<main class="max-w-[1000px] mx-auto px-4 pb-12 mt-0">
+
+    <!-- Hero Image -->
+    <div class="w-full mb-2">
+        <img src="https://images.unsplash.com/photo-1580128660010-fdcb8926b014?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Trump surrounded by reporters" class="w-full h-auto object-cover aspect-[16/9]" onerror="this.onerror=null;this.src='https://picsum.photos/seed/trump/1200/675';">
+    </div>
+
+    <!-- Caption per Brand Kit (blue accent line above caption) -->
+    <div class="border-b border-gray-200 pb-6 mb-8 mt-4">
+        <div class="caption-accent">
+            <p class="caption-text leading-snug">
+                President Donald Trump speaks to reporters aboard Air Force One.
+                <span class="font-mono text-[11px] text-gray-500 uppercase ml-2 tracking-tight">Evan Vucci / AP file</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-12">
+        <!-- LEFT COLUMN: Main Article -->
+        <article class="w-full lg:w-[65%] flex-shrink-0">
+            <!-- Utilities & Byline -->
+            <div class="flex flex-wrap items-center justify-between mb-8">
+                <div class="flex items-center space-x-6">
+                    <button class="flex items-center font-mono text-[11px] font-bold text-gray-800 hover:text-nbc-blue uppercase tracking-tight gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg> Share
+                    </button>
+                    <button class="flex items-center font-mono text-[11px] font-bold text-gray-800 hover:text-nbc-blue uppercase tracking-tight gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> Add NBC News to Google
+                    </button>
+                </div>
+                <button class="flex items-center font-mono text-[11px] font-bold text-gray-800 hover:text-nbc-blue uppercase tracking-tight gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg> Save
+                </button>
+            </div>
+
+            <div class="mb-8">
+                <p class="font-mono text-[11px] text-gray-500 uppercase tracking-tight mb-2">March 12, 2026, 8:14 AM GMT+2</p>
+                <p class="font-condensed font-bold text-[20px] text-nbc-black">By Courtney Kube and Carol E. Lee</p>
+            </div>
+
+            <!-- Audio Player Widget -->
+            <div class="border-y border-gray-200 py-4 mb-10 flex items-center justify-between">
+                <div class="flex flex-col">
+                    <span class="font-condensed text-[16px] font-bold uppercase">Listen to this article</span>
+                    <span class="font-sans text-[13px]">with a <a href="#" class="text-nbc-blue font-bold hover:underline">free account</a></span>
+                </div>
+                <div class="flex-grow ml-6 flex items-center gap-4">
+                    <button class="w-10 h-10 bg-nbc-blue rounded-full flex items-center justify-center text-white hover:bg-blue-700 shrink-0">
+                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </button>
+                    <div class="flex-grow flex flex-col gap-1">
+                        <div class="w-full h-1 bg-gray-200 rounded-full relative cursor-pointer">
+                            <div class="absolute left-0 top-0 h-full bg-nbc-blue rounded-full w-0"></div>
+                            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-nbc-blue rounded-full shadow"></div>
+                        </div>
+                        <div class="flex justify-between font-mono text-[11px] text-gray-500">
+                            <span>00:00</span>
+                            <span>03:15</span>
+                        </div>
+                    </div>
+                    <button class="border border-gray-300 rounded p-1 text-gray-600 hover:bg-gray-50 shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                    </button>
+                    <button class="border border-gray-300 rounded px-1.5 py-0.5 font-mono text-[11px] font-bold text-gray-600 hover:bg-gray-50 shrink-0">1x</button>
+                </div>
+            </div>
+
+            <!-- Article Body -->
+            <div class="article-body max-w-[650px] mx-auto lg:mx-0">
+                <p>WASHINGTON — More than 120 Democratic lawmakers are demanding answers from Defense Secretary Pete Hegseth about a recent U.S. airstrike on a school in Iran, including whether artificial intelligence was used to identify the target.</p>
+
+                <p>In a letter sent to the Pentagon on Thursday and obtained first by NBC News, the lawmakers expressed "grave concern" over the strike, which local officials and human rights groups say resulted in significant civilian casualties.</p>
+
+                <!-- Inline Recommended Native Post -->
+                <div class="my-10 bg-nbc-lightgray p-6 border-l-[6px] border-nbc-blue relative overflow-hidden">
+                    <div class="absolute top-0 left-0 bg-nbc-blue text-white font-condensed text-[12px] uppercase tracking-wide px-3 py-1">Recommended</div>
+                    <div class="mt-6 flex gap-4 cursor-pointer group rec-card rounded p-2 -m-2">
+                        <img src="https://images.unsplash.com/photo-1598425237654-4c0db4e56eb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Iran fire" class="w-[120px] h-[80px] object-cover shrink-0" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fire/120/80';">
+                        <div>
+                            <span class="eyebrow text-nbc-blue mb-1 block">Iran War</span>
+                            <h4 class="font-condensed text-[20px] leading-tight group-hover:underline">Oil prices jump as Iran war causes the 'largest supply disruption' in history</h4>
+                        </div>
+                    </div>
+                    <div class="h-px bg-gray-300 w-full my-4"></div>
+                    <div class="flex gap-4 cursor-pointer group rec-card rounded p-2 -m-2">
+                        <img src="https://images.unsplash.com/photo-1541888045618-97ce932822a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Cyber" class="w-[120px] h-[80px] object-cover shrink-0" onerror="this.onerror=null;this.src='https://picsum.photos/seed/cyber/120/80';">
+                        <div>
+                            <span class="eyebrow text-nbc-blue mb-1 block">Iran War</span>
+                            <h4 class="font-condensed text-[20px] leading-tight group-hover:underline">Iran appears to have conducted a significant cyberattack against a U.S. company</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <p>"We write to request immediate clarification regarding the intelligence processes and targeting directives that led to the authorization of this strike," the lawmakers, led by Rep. Jason Crow, D-Colo., and Sen. Elizabeth Warren, D-Mass., wrote in the letter.</p>
+
+                <p>The Biden administration has previously <a href="#">defended the use of advanced algorithms</a> in conflict zones, arguing they reduce collateral damage. However, the Democrats' letter questions the reliability of those systems and asks whether human oversight was bypassed.</p>
+
+                <p>The Pentagon did not immediately respond to a request for comment on the letter.</p>
+            </div>
+
+            <!-- Bottom Utilities -->
+            <div class="flex flex-wrap items-center space-x-6 border-t border-gray-200 pt-6 mt-12 mb-10 max-w-[650px]">
+                <button class="flex items-center font-mono text-[11px] font-bold text-gray-800 hover:text-nbc-blue uppercase tracking-tight gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg> Share
+                </button>
+                <button class="flex items-center font-mono text-[11px] font-bold text-gray-800 hover:text-nbc-blue uppercase tracking-tight gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> Add NBC News to Google
+                </button>
+                <button class="flex items-center font-mono text-[11px] font-bold text-gray-800 hover:text-nbc-blue uppercase tracking-tight gap-1.5 ml-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg> Save
+                </button>
+            </div>
+
+            <!-- Author Bio Block -->
+            <div class="flex gap-5 items-start border-b border-gray-200 pb-10 mb-12 max-w-[650px]">
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-condensed font-bold text-[22px]">Courtney Kube</h4>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-gray-400 hover:text-nbc-black"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+                        </div>
+                    </div>
+                    <p class="font-sans text-[15px] text-nbc-darkgray mb-4">Courtney Kube is a correspondent covering the Pentagon and the Department of Defense for NBC News.</p>
+                </div>
+            </div>
+        </article>
+
+        <!-- RIGHT COLUMN: Sidebar -->
+        <aside class="hidden lg:block w-[35%] shrink-0">
+            <div class="sticky top-[88px]">
+                <!-- Latest News (brand kit: blue bullet timestamps) -->
+                <div class="mb-10">
+                    <div class="flex items-center gap-2 border-b-2 border-nbc-navy pb-2 mb-4">
+                        <div class="w-[60px] h-[4px] bg-nbc-blue"></div>
+                        <h3 class="font-condensed font-bold text-[20px] uppercase">Latest News</h3>
+                    </div>
+                    <div class="space-y-0">
+                        <a href="#" class="flex gap-2.5 py-3 border-b border-gray-100 group">
+                            <span class="text-nbc-blue text-[8px] mt-[6px] shrink-0">&#9679;</span>
+                            <div>
+                                <span class="font-mono text-[11px] text-gray-400 block mb-1">3m ago</span>
+                                <h4 class="font-condensed font-semibold text-[15px] leading-tight group-hover:text-nbc-blue transition">Senate advances bipartisan veterans' health care bill</h4>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-2.5 py-3 border-b border-gray-100 group">
+                            <span class="text-nbc-blue text-[8px] mt-[6px] shrink-0">&#9679;</span>
+                            <div>
+                                <span class="font-mono text-[11px] text-gray-400 block mb-1">18m ago</span>
+                                <h4 class="font-condensed font-semibold text-[15px] leading-tight group-hover:text-nbc-blue transition">Wall Street opens higher after Fed holds rates steady</h4>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-2.5 py-3 border-b border-gray-100 group">
+                            <span class="text-nbc-blue text-[8px] mt-[6px] shrink-0">&#9679;</span>
+                            <div>
+                                <span class="font-mono text-[11px] text-gray-400 block mb-1">34m ago</span>
+                                <h4 class="font-condensed font-semibold text-[15px] leading-tight group-hover:text-nbc-blue transition">Tornado warnings issued for parts of Gulf Coast</h4>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-2.5 py-3 border-b border-gray-100 group">
+                            <span class="text-nbc-blue text-[8px] mt-[6px] shrink-0">&#9679;</span>
+                            <div>
+                                <span class="font-mono text-[11px] text-gray-400 block mb-1">52m ago</span>
+                                <h4 class="font-condensed font-semibold text-[15px] leading-tight group-hover:text-nbc-blue transition">U.S. and EU reach preliminary AI safety agreement</h4>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-2.5 py-3 border-b border-gray-100 group">
+                            <span class="text-nbc-blue text-[8px] mt-[6px] shrink-0">&#9679;</span>
+                            <div>
+                                <span class="font-mono text-[11px] text-gray-400 block mb-1">1h ago</span>
+                                <h4 class="font-condensed font-semibold text-[15px] leading-tight group-hover:text-nbc-blue transition">CDC reports sharp decline in flu hospitalizations</h4>
+                            </div>
+                        </a>
+                        <a href="#" class="flex gap-2.5 py-3 group">
+                            <span class="text-nbc-blue text-[8px] mt-[6px] shrink-0">&#9679;</span>
+                            <div>
+                                <span class="font-mono text-[11px] text-gray-400 block mb-1">2h ago</span>
+                                <h4 class="font-condensed font-semibold text-[15px] leading-tight group-hover:text-nbc-blue transition">SpaceX launches Starship on sixth test flight</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sponsored Stories -->
+                <div>
+                    <div class="flex justify-between items-end border-b-2 border-nbc-navy pb-2 mb-6">
+                        <h3 class="font-condensed font-bold text-[20px] uppercase">Sponsored Stories</h3>
+                        <span class="font-mono text-[10px] text-gray-500 uppercase tracking-tight mb-1">by Taboola</span>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="group cursor-pointer feed-card">
+                            <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Toothpaste" class="w-full h-[180px] object-cover mb-3" onerror="this.onerror=null;this.src='https://picsum.photos/seed/paste/400/250';">
+                            <p class="eyebrow mb-1">AMERICAN BEAUTY INSIGHTS</p>
+                            <h4 class="feed-headline text-[18px] group-hover:underline">A Little-Known Neck Trick Is Quietly Trending Online</h4>
+                        </div>
+                        <div class="group cursor-pointer feed-card">
+                            <img src="https://images.unsplash.com/photo-1504198458649-3128b932f49e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gutters" class="w-full h-[180px] object-cover mb-3" onerror="this.onerror=null;this.src='https://picsum.photos/seed/gutter/400/250';">
+                            <div class="flex justify-between items-start mb-1">
+                                <p class="eyebrow">HOMEBUDDY</p>
+                                <span class="border border-gray-400 rounded-sm px-1.5 py-0.5 font-mono text-[10px] text-gray-600 uppercase">Learn More</span>
+                            </div>
+                            <h4 class="feed-headline text-[18px] group-hover:underline">Here's What A New Gutter System Should Cost You In Dallas</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<!-- ====================================================================== -->
+<!-- BOTTOM FEED WIDGET (MIX OF SPONSORED TABOOLA & NATIVE NBC CONTENT)     -->
+<!-- ====================================================================== -->
+<div class="w-full border-t border-gray-200 bg-white pt-12 pb-24 px-4">
+    <div class="max-w-[1000px] mx-auto">
+
+        <!-- Section 1: 2-Column Sponsored Large Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 mb-10">
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Financial Advisor" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/advisor/600/350';">
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="eyebrow">SPONSORED / SMARTASSET</span>
+                    <span class="border border-gray-400 rounded-full px-3 py-1 font-mono text-[10px] text-gray-800 hover:bg-gray-50">Learn More</span>
+                </div>
+                <h3 class="feed-headline text-[26px] mb-2 group-hover:underline">Ask A Pro: "I Have $2.3M Saved for Retirement. How Much Can I Actually Spend Each Year?"</h3>
+                <p class="font-sans text-[15px] text-nbc-darkgray leading-snug flex-grow">This quiz matches nearly 50,000 people each month with vetted financial advisors.</p>
+            </div>
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tax Line" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/taxline/600/350';">
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="eyebrow truncate max-w-[200px]">SPONSORED / FRESH START INFORMATION</span>
+                    <span class="border border-gray-400 rounded-full px-3 py-1 font-mono text-[10px] text-gray-800 hover:bg-gray-50 shrink-0">Learn More</span>
+                </div>
+                <h3 class="feed-headline text-[26px] mb-2 group-hover:underline">Thursday: IRS Forgiving Millions In Tax Debt</h3>
+                <p class="font-sans text-[15px] text-nbc-darkgray leading-snug flex-grow">As the tax relief deadline nears, thousands of Americans are rushing to resolve their tax debts before the IRS imposes hefty penalties.</p>
+            </div>
+        </div>
+
+        <!-- Section 2: 3-Column Sponsored Dense Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 mb-10 border-t border-gray-200 pt-10">
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Retirement Woman" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/woman/400/225';">
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="eyebrow">SPONSORED / SMARTASSET</span>
+                    <span class="border border-gray-400 rounded-full px-2.5 py-0.5 font-mono text-[10px] text-gray-800 hover:bg-gray-50">Go To Quiz</span>
+                </div>
+                <h3 class="feed-headline text-[20px] mb-2 group-hover:underline">Ask a Pro: "I'm 65 With $1.1M Saved. What's My Retirement Budget?"</h3>
+            </div>
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1517400508447-f8dd518b86db?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Plane Flight" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/plane/400/225';">
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="eyebrow">SPONSORED / SMART TRAVEL TIPS</span>
+                    <span class="border border-gray-400 rounded-full px-2.5 py-0.5 font-mono text-[10px] text-gray-800 hover:bg-gray-50">Learn More</span>
+                </div>
+                <h3 class="feed-headline text-[20px] mb-2 group-hover:underline">Seniors Above 55 Years of Age Can Now Fly Business Class For The...</h3>
+            </div>
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="House" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/house/400/225';">
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="eyebrow">SPONSORED / OTTO INSURANCE</span>
+                    <span class="border border-gray-400 rounded-full px-2.5 py-0.5 font-mono text-[10px] text-gray-800 hover:bg-gray-50">Learn More</span>
+                </div>
+                <h3 class="feed-headline text-[20px] mb-2 group-hover:underline">Texas: Say Hello To Cheap Home Insurance If You Live In These Zip...</h3>
+            </div>
+        </div>
+
+        <!-- Section 3: Native Content Block "More From NBC News" -->
+        <div class="w-full mb-10 border-t-4 border-nbc-blue pt-6">
+            <div class="flex items-center gap-3 mb-6">
+                <!-- Inline peacock for section branding -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-6 h-6 shrink-0">
+                    <path fill="#FCCC12" d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                    <path fill="#FF7112" d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                    <path fill="#EF1541" d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                    <path fill="#6E55DC" d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                    <path fill="#069DE0" d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                    <path fill="#05AC3F" d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                    <path fill="#102039" d="M50,47c-2.8,0-5,2.2-5,5v13.5c0,2.8,2.2,5,5,5s5-2.2,5-5V52C55,49.2,52.8,47,50,47z"/>
+                </svg>
+                <h2 class="font-condensed font-bold text-[32px] text-nbc-black">More From NBC News</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10">
+                <!-- Native Card -->
+                <div class="group cursor-pointer flex flex-col feed-card">
+                    <div class="relative w-full aspect-[16/10] overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Kristi Noem" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pol/400/250';">
+                        <!-- NBC Bug Watermark -->
+                        <div class="absolute top-2 left-2 w-7 h-7 text-white opacity-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                                <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                                <path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                                <path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                                <path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                                <path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                                <path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 mb-1 eyebrow text-nbc-blue">
+                        <span>NBC NEWS</span> <span class="text-gray-400">/</span> <span>NEWS</span>
+                    </div>
+                    <h3 class="feed-headline text-[22px] group-hover:underline">Trump wants to fully remove Iran's leadership and what cost Kristi Noem her job</h3>
+                </div>
+                <!-- Native Card -->
+                <div class="group cursor-pointer flex flex-col feed-card">
+                    <div class="relative w-full aspect-[16/10] overflow-hidden mb-2">
+                        <img src="https://images.unsplash.com/photo-1573497161161-c3e73707e25c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Kristi Noem Close up" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pol2/400/250';">
+                        <div class="absolute top-2 left-2 w-7 h-7 text-white opacity-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                                <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                                <path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                                <path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                                <path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                                <path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                                <path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 mb-1 eyebrow text-nbc-blue">
+                        <span>NBC NEWS</span> <span class="text-gray-400">/</span> <span>POLITICS</span>
+                    </div>
+                    <h3 class="feed-headline text-[22px] group-hover:underline">What led Trump to replace Kristi Noem as Homeland Security secretary</h3>
+                </div>
+                <!-- Native Card -->
+                <div class="group cursor-pointer flex flex-col feed-card">
+                    <div class="relative w-full aspect-[16/10] overflow-hidden mb-2 bg-red-50 flex">
+                        <img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Dutch Oven" class="w-1/2 h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pot/200/250';">
+                        <img src="https://images.unsplash.com/photo-1584286595398-a59f21d313f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Dutch Oven 2" class="w-1/2 h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pan/200/250';">
+                        <div class="absolute top-2 left-2 w-7 h-7 text-white opacity-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                                <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                                <path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                                <path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                                <path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                                <path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                                <path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 mb-1 eyebrow text-nbc-blue">
+                        <span>NBC NEWS</span> <span class="text-gray-400">/</span> <span>SHOP</span>
+                    </div>
+                    <h3 class="feed-headline text-[22px] group-hover:underline">Le Creuset's ultra-popular Dutch oven is almost 40% off — including iconic colors</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: 2-Column Sponsored Large Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 mb-10 border-t border-gray-200 pt-10">
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1533558701576-23c65e0272fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wind Spinner" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/toy/600/350';">
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="eyebrow">SPONSORED / FANYIL</span>
+                    <span class="border border-gray-400 rounded-full px-3 py-1 font-mono text-[10px] text-gray-800 hover:bg-gray-50">Learn More</span>
+                </div>
+                <h3 class="feed-headline text-[26px] mb-2 group-hover:underline">The Viral Garden Trend: Why This Classic Cartoon Spinner Is Everywhere</h3>
+            </div>
+            <!-- Additional native card to balance the grid -->
+            <div class="group cursor-pointer flex flex-col h-full feed-card">
+                <div class="relative w-full aspect-[16/9] overflow-hidden mb-3">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pentagon" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pentagon/600/350';">
+                    <div class="absolute top-2 left-2 w-7 h-7 text-white opacity-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+                            <path d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                            <path d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                            <path d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                            <path d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                            <path d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                            <path d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1.5 mb-1 eyebrow text-nbc-blue">
+                    <span>NBC NEWS</span> <span class="text-gray-400">/</span> <span>NATIONAL SECURITY</span>
+                </div>
+                <h3 class="feed-headline text-[26px] mb-2 group-hover:underline">Pentagon officials weigh response options as Iran conflict enters new phase</h3>
+                <p class="font-sans text-[15px] text-nbc-darkgray leading-snug flex-grow">Senior military leaders briefed the president on a range of scenarios including expanded air operations.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- NBC Style Footer -->
+<footer class="bg-[#102039] text-white pt-12 pb-8 px-4">
+    <div class="max-w-[1200px] mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center border-b border-gray-700 pb-8 mb-8">
+            <a href="#" class="flex items-center mb-6 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-8 h-8 mr-2 shrink-0">
+                    <path fill="#FCCC12" d="M49.6,63.1c-6.8-2.6-13-8.8-15.6-15.6c-1.3-3.3-8.8-19.1-8.8-19.1s14.8,2.7,18.4,4.2 C48,34.4,51,40.1,49.6,63.1z"/>
+                    <path fill="#FF7112" d="M49.6,63.1c-4.4-5.8-5.7-14.3-3.2-21.2c1.3-3.6-0.3-21.2-0.3-21.2s11.5,9.6,13.7,12.9 C62.3,37.3,61.4,43.3,49.6,63.1z" transform="rotate(-30 50 50)"/>
+                    <path fill="#EF1541" d="M49.6,63.1c-1.4-7.2,1.3-15.3,7.1-19.7c2.9-2.2,9.3-18.8,9.3-18.8s4.6,14.3,3.3,18 C67.8,46.8,63.3,51,49.6,63.1z" transform="rotate(-60 50 50)"/>
+                    <path fill="#6E55DC" d="M49.6,63.1c1.4-7.2-1.3-15.3-7.1-19.7c-2.9-2.2-9.3-18.8-9.3-18.8s-4.6,14.3-3.3,18 C32.2,46.8,36.7,51,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-60 50 50)"/>
+                    <path fill="#069DE0" d="M49.6,63.1c4.4-5.8,5.7-14.3,3.2-21.2c-1.3-3.6,0.3-21.2,0.3-21.2s-11.5,9.6-13.7,12.9 C37.7,37.3,38.6,43.3,49.6,63.1z" transform="translate(100, 0) scale(-1, 1) rotate(-30 50 50)"/>
+                    <path fill="#05AC3F" d="M49.6,63.1c6.8-2.6,13-8.8,15.6-15.6c1.3-3.3,8.8-19.1,8.8-19.1s-14.8,2.7-18.4,4.2 C52,34.4,49,40.1,49.6,63.1z" transform="translate(100, 0) scale(-1, 1)"/>
+                    <path fill="#ffffff" d="M50,47c-2.8,0-5,2.2-5,5v13.5c0,2.8,2.2,5,5,5s5-2.2,5-5V52C55,49.2,52.8,47,50,47z"/>
+                </svg>
+                <span class="font-condensed font-bold text-[28px] tracking-tight mt-[3px]">NBC NEWS</span>
+            </a>
+            <div class="flex space-x-6">
+                <!-- Social icons -->
+                <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter/X">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Instagram">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition" aria-label="TikTok">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 font-mono text-[13px] text-gray-400">
+            <ul class="space-y-4">
+                <li><a href="#" class="hover:text-white transition">ABOUT</a></li>
+                <li><a href="#" class="hover:text-white transition">CONTACT</a></li>
+                <li><a href="#" class="hover:text-white transition">CAREERS</a></li>
+            </ul>
+            <ul class="space-y-4">
+                <li><a href="#" class="hover:text-white transition">COUPONS</a></li>
+                <li><a href="#" class="hover:text-white transition">NBC NEWS STORE</a></li>
+            </ul>
+            <ul class="space-y-4">
+                <li><a href="#" class="hover:text-white transition">PRIVACY POLICY</a></li>
+                <li><a href="#" class="hover:text-white transition">DO NOT SELL MY PERSONAL INFO</a></li>
+                <li><a href="#" class="hover:text-white transition">TERMS OF SERVICE</a></li>
+            </ul>
+            <ul class="space-y-4">
+                <li><a href="#" class="hover:text-white transition">NBCU DIGITAL CONTENT GUIDELINES</a></li>
+                <li><a href="#" class="hover:text-white transition">NBC UNIVERSAL</a></li>
+                <li><a href="#" class="hover:text-white transition">AD CHOICES</a></li>
+            </ul>
+        </div>
+        <div class="font-mono text-[11px] text-gray-500 uppercase tracking-widest text-center border-t border-gray-700 pt-8 mt-8">
+            &copy; 2026 NBC UNIVERSAL
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
